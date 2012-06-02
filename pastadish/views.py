@@ -1,7 +1,6 @@
 import cgi, hashlib
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
-from django.db.models.query import DoesNotExist
 from models import *
 
 # Create your views here.
@@ -26,7 +25,7 @@ def index(request):
                 try:
                     Paste.objects.get(key=sha)
                     i += 1
-                except DoesNotExist:
+                except Paste.DoesNotExist:
                     newpaste.key = sha
                     needskey = False
             newpaste.save()

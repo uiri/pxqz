@@ -16,7 +16,7 @@ def index(request):
             i = 0
             while needskey:
                 if i > 40:
-                    return render_to_response('index.html')
+                    return render_to_response('400.html')
                 elif i > 35:
                     j = 5 - (40 - i)
                 else:
@@ -24,10 +24,10 @@ def index(request):
                 sha = hashlib.sha1(request.POST['t']).hexdigest()[i:j]
                 try:
                     Paste.objects.get(key=sha)
+                    i += 1
+                except DoesNotExist:
                     newpaste.key = sha
                     needskey = False
-                except:
-                    i += 1
             newpaste.save()
             return HttpResponseRedirect('/'+sha)
 

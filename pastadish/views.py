@@ -12,7 +12,7 @@ def index(request):
         return render_to_response('index.html')
     else:
         if request.POST['t']:
-            newpaste = Paste(text=request.POST['t'], date=datetime.now(-4))
+            newpaste = Paste(text=request.POST['t'], date=datetime.datetime.now(-4))
             needskey = True
             i = 0
             while needskey:
@@ -43,5 +43,5 @@ def retrieve(request):
         raise Http404
 
 def clean(request):
-    Paste.objects.filter(date_lte = datetime.fromtimestamp(time.time()-86400)).delete()
+    Paste.objects.filter(date_lte = datetime.datetime.fromtimestamp(time.time()-86400)).delete()
     return HttpResponse('All clear', content_type='text/plain')

@@ -1,7 +1,7 @@
 import cgi, hashlib
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, Http404
 from models import *
 
 # Create your views here.
@@ -17,7 +17,7 @@ def index(request):
             i = 0
             while needskey:
                 if i > 40:
-                    return render_to_response('400.html')
+                    return HttpResponseBadRequest('<h1>400 Bad Request</h1><p>Mad SHA1 conflicts :/</p>')
                 elif i > 35:
                     j = 5 - (40 - i)
                 else:
@@ -37,7 +37,7 @@ def retrieve(request):
         try:
             data = Paste.objects.get(key=request.path[1:])
         except:
-            return render_to_response('404.html')
+            raise Http404
         return HttpResponse(data, content_type='text/plain')
     else:
-        return render_to_response('404.html')
+        raise Http404

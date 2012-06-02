@@ -4,3 +4,6 @@ from django.db import models
 class Paste(models.Model):
     key = models.CharField(max_length=40)
     text = models.TextField()
+
+    def __unicode__(self):
+        return u'%s' % (self.text)

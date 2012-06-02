@@ -113,6 +113,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'pastadish',
     'gunicorn',
     'django.contrib.auth',
     'django.contrib.contenttypes',

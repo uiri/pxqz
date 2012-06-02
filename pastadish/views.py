@@ -43,5 +43,5 @@ def retrieve(request):
         raise Http404
 
 def clean(request):
-    Paste.objects.filter(date_lte = datetime.datetime.fromtimestamp(time.time()-86400)).delete()
+    Paste.objects.filter(date__lte = datetime.datetime.fromtimestamp(time.time()-86400)).delete()
     return HttpResponse('All clear', content_type='text/plain')

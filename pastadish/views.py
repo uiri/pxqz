@@ -1,6 +1,7 @@
 import cgi, hashlib
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
+from django.db.models.query import DoesNotExist
 from models import *
 
 # Create your views here.

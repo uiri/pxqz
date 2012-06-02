@@ -16,7 +16,7 @@ def index(request):
             i = 0
             while needskey:
                 if i > 40:
-                    raise Http400
+                    raise HttpResponseBadRequest()
                 elif i > 35:
                     j = 5 - (40 - i)
                 else:
@@ -39,4 +39,4 @@ def retrieve(request):
             raise Http404
         return HttpResponse(data, content_type='text/plain')
     else:
-        return Http404
+        raise Http404

@@ -12,7 +12,7 @@ def index(request):
         return render_to_response('index.html')
     else:
         if request.POST['t']:
-            newpaste = Paste(text=request.POST['t'])
+            newpaste = Paste(text=request.POST['t'], date=datetime.now(-4))
             needskey = True
             i = 0
             while needskey:

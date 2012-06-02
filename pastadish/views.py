@@ -16,7 +16,7 @@ def index(request):
             i = 0
             while needskey:
                 if i > 40:
-                    raise HttpResponseBadRequest()
+                    return render_to_response('index.html')
                 elif i > 35:
                     j = 5 - (40 - i)
                 else:

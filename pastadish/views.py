@@ -37,7 +37,7 @@ def retrieve(request):
         try:
             data = Paste.objects.get(key=request.path[1:])
         except:
-            raise Http404
+            return render_to_response('404.html')
         return HttpResponse(data, content_type='text/plain')
     else:
-        raise Http404
+        return render_to_response('404.html')

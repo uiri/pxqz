@@ -11,7 +11,7 @@ def index(request):
         return render_to_response('index.html')
     else:
         if request.POST['t']:
-            newpaste = Paste.objects.create(text=request.POST['t'])
+            newpaste = Paste.objects.create(text=request.POST['t'][0])
             needskey = True
             i = 0
             while needskey:
@@ -21,7 +21,7 @@ def index(request):
                     j = 5 - (40 - i)
                 else:
                     j = i+5
-                sha = hashlib.sha1(request.POST['t']).hexdigest()[i:j]
+                sha = hashlib.sha1(request.POST['t'][0]).hexdigest()[i:j]
                 try:
                     Paste.objects.get(key=sha)
                     newpaste.key = sha

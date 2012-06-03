@@ -12,25 +12,29 @@ def index(request):
         return render_to_response('index.html')
     else:
         if request.POST['t']:
-            newpaste = Paste(text=request.POST['t'])
-            needskey = True
-            i = 0
-            while needskey:
-                if i > 40:
-                    return HttpResponseBadRequest('<h1>400 Bad Request</h1><p>Mad SHA1 conflicts :/</p>')
-                elif i > 35:
-                    j = 5 - (40 - i)
-                else:
-                    j = i+5
-                sha = hashlib.sha1(request.POST['t']).hexdigest()[i:j]
-                try:
-                    Paste.objects.get(key=sha)
-                    i += 1
-                except Paste.DoesNotExist:
-                    newpaste.key = sha
-                    needskey = False
-            newpaste.save()
-            return HttpResponseRedirect('/'+sha)
+            try:
+                oldpaste = Paste.objects.get(text=request.POST['t'])
+                return HttpResponseRedirect('/'+oldpaste.key)
+            except Paste.DoesNotExist:
+                newpaste = Paste(text=request.POST['t'])
+                needskey = True
+                i = 0
+                while needskey:
+                    if i > 40:
+                        return HttpResponseBadRequest('<h1>400 Bad Request</h1><p>Mad SHA1 conflicts :/</p>')
+                    elif i > 35:
+                        j = 5 - (40 - i)
+                    else:
+                        j = i+5
+                    sha = hashlib.sha1(request.POST['t']).hexdigest()[i:j]
+                    try:
+                        Paste.objects.get(key=sha)
+                        i += 1
+                    except Paste.DoesNotExist:
+                        newpaste.key = sha
+                        needskey = False
+                newpaste.save()
+                return HttpResponseRedirect('/'+sha)
 
 def retrieve(request):
     if request.method == 'GET':

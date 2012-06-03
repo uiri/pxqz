@@ -49,3 +49,7 @@ def retrieve(request):
 def clean(request):
     Paste.objects.filter(date__lte = datetime.datetime.fromtimestamp(time.time()-86400)).delete()
     return HttpResponse('All clear', content_type='text/plain')
+
+def script(request):
+    scripttext = open('pxqz').read()
+    return HttpResponse(scripttext, content_type='text/plain')

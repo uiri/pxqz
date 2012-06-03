@@ -7,6 +7,7 @@ import pastadish.views
 
 urlpatterns = patterns('',
                        ('^clear$', pastadish.views.clean),
+                       ('^script$', pastadish.views.script),
                        ('^.+$', pastadish.views.retrieve),
                        ('^$', pastadish.views.index),
     # Examples:

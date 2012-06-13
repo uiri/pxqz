@@ -48,7 +48,8 @@ def retrieve(request):
         raise Http404
 
 def script(request):
-    return HttpResponse(render_to_string('script.pl'), content_type='text/plain')
+    data = render_to_string('script.pl')
+    return HttpResponse(data, content_type='text/plain')
 
 def clean(request):
     Paste.objects.filter(date__lte = datetime.datetime.fromtimestamp(time.time()-86400)).delete()

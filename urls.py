@@ -6,6 +6,7 @@ import pastadish.views
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+                       ('^script$', pastadish.views.script),
                        ('^clear$', pastadish.views.clean),
                        ('^.+$', pastadish.views.retrieve),
                        ('^$', pastadish.views.index),

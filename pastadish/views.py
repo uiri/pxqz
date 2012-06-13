@@ -1,4 +1,5 @@
 import cgi, hashlib, time, datetime
+from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, Http404
@@ -45,6 +46,9 @@ def retrieve(request):
         return HttpResponse(data, content_type='text/plain')
     else:
         raise Http404
+
+def script(request):
+    return HttpResponse(render_to_string('script.pl'), content_type='text/plain')
 
 def clean(request):
     Paste.objects.filter(date__lte = datetime.datetime.fromtimestamp(time.time()-86400)).delete()

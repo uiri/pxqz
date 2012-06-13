@@ -47,10 +47,20 @@ def retrieve(request):
     else:
         raise Http404
 
-def script(request):
-    data = render_to_string('script.pl')
-    return HttpResponse(data, content_type='text/plain')
-
 def clean(request):
     Paste.objects.filter(date__lte = datetime.datetime.fromtimestamp(time.time()-86400)).delete()
+    Paste.objects.filter(key = "script").delete()
+    newpaste = Paste(text="""#!/usr/bin/env perl
+
+my $input = 't=';
+while (<STDIN>) {
+      $input .= qq($_);
+}
+$input =~ s/"/\\"/g;
+$input .= '"';
+$data = '"' . $input;
+print `curl -id $data http://p.xqz.ca/ 2>/dev/null | grep ^Location | sed -e 's/Location: //'`
+""")
+    newpaste.key = "script"
+    newpaste.save()
     return HttpResponse('All clear', content_type='text/plain')

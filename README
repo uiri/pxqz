@@ -1,0 +1,1 @@
+I understand why Django enforces project/app separation stuff, but it sometimes gets on my nerves because I like to write single app websites. Seems more applicable to real CMSes. So I have silly names on the project and the app because naming is too hard to do right at the start and directory names are hard to change.

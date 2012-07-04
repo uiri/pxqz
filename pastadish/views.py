@@ -61,7 +61,6 @@ $input =~ s/"/\\"/g;
 $input =~ s/`/\\`/g;
 $input .= '"';
 $data = '"' . $input;
-print $input;
 print `curl -id $data http://p.xqz.ca/ 2>/dev/null | grep ^Location | sed -e 's/Location: //'`
 """)
     newpaste.key = "script"

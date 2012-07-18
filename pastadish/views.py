@@ -9,6 +9,7 @@ from models import *
 
 @csrf_exempt
 def index(request):
+    request.encoding = 'utf-8'
     if request.method == 'GET':
         return render_to_response('index.html')
     else:

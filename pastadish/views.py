@@ -13,7 +13,7 @@ def index(request):
     if request.method == 'GET':
         return render_to_response('index.html')
     else:
-        if request.POST['t']:
+        if request.POST['t'] != "":
             try:
                 oldpaste = Paste.objects.get(text=request.POST['t'])
                 return HttpResponseRedirect('/'+oldpaste.key)
@@ -37,6 +37,8 @@ def index(request):
                         needskey = False
                 newpaste.save()
                 return HttpResponseRedirect('/'+sha)
+        else:
+            return HttpResponseRedirect('/')
 
 def retrieve(request):
     if request.method == 'GET':

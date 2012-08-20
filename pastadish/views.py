@@ -59,14 +59,14 @@ my $input = 't=';
 while (<STDIN>) {
       $input .= qq($_);
 }
-$input =~ s/\\\\/\\\\\\\\/g;
-$input =~ s/"/\\\\"/g;
-$input =~ s/`/\\\\`/g;
-$input =~ s/;/\\\\;/g;
-$input =~ s/&/\\\\&/g;
+$input =~ s/\\/%5C/g;
+$input =~ s/"/%22/g;
+$input =~ s/`/%60/g;
+$input =~ s/;/%3B/g;
+$input =~ s/&/%26/g;
 $input .= '"';
-$data = '"' . $input;
-print `curl -id $data http://p.xqz.ca/ 2>/dev/null | grep ^Location | sed -e 's/Location: //'`
+$data = 'curl -id "' . $input . " http://p.xqz.ca/ 2>/dev/null | grep ^Location | sed 's/Location: //'";
+exec($data);
 """)
     newpaste.key = "script"
     newpaste.save()

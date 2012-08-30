@@ -1,4 +1,4 @@
-# Django settings for djpasta project.
+# Django settings for pxqz project.
 
 DEBUG = False
 #DEBUG = True

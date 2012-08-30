@@ -10,8 +10,8 @@ urlpatterns = patterns('',
                        ('^.+$', pastadish.views.retrieve),
                        ('^$', pastadish.views.index),
     # Examples:
-    # url(r'^$', 'djpasta.views.home', name='home'),
-    # url(r'^djpasta/', include('djpasta.foo.urls')),
+    # url(r'^$', 'pxqz.views.home', name='home'),
+    # url(r'^pxqz/', include('pxqz.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

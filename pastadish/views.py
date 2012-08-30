@@ -46,7 +46,13 @@ def retrieve(request):
             data = Paste.objects.get(key=request.path[1:])
         except:
             raise Http404
-        return HttpResponse(data, content_type='text/plain')
+        response = HttpResponse()
+        response['content-type'] = 'text/plain'
+        response['title'] = 'Plain Text Paste'
+        if request.path[1:] == 'script':
+            response['title'] = "PXQZ Command line script"
+        response.write(data)
+        return response
     else:
         raise Http404
 

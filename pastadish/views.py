@@ -65,6 +65,7 @@ my $input = 't=';
 while (<STDIN>) {
       $input .= qq($_);
 }
+$input =~ s/\+/%2B/g;
 $input =~ s/\\/%5C/g;
 $input =~ s/"/%22/g;
 $input =~ s/`/%60/g;

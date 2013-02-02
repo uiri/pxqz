@@ -11,7 +11,7 @@ from models import *
 def index(request):
     request.encoding = 'utf-8'
     if request.method == 'GET':
-        return render_to_response('index.html')
+        return render_to_response('index.html', {'data': ''})
     else:
         if request.POST['t'] != "":
             try:
@@ -53,6 +53,16 @@ def retrieve(request):
             response['title'] = "PXQZ Command line script"
         response.write(data)
         return response
+    else:
+        raise Http404
+
+def edit(request):
+    if request.method == 'GET':
+        try:
+            data = Paste.objects.get(key=request.path[1:].split('/')[0])
+        except:
+            raise Http404
+        return render_to_response('index.html', {'data': data})
     else:
         raise Http404
 

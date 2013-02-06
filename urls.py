@@ -8,6 +8,7 @@ import pastadish.views
 urlpatterns = patterns('',
                        ('^clear$', pastadish.views.clean),
                        ('^[0-9a-fA-F]+/edit$', pastadish.views.edit),
+                       ('^[0-9a-fA-F]+/html$', pastadish.views.html),
                        ('^.+$', pastadish.views.retrieve),
                        ('^$', pastadish.views.index),
     # Examples:

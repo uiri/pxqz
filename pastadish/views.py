@@ -40,14 +40,14 @@ def index(request):
         else:
             return HttpResponseRedirect('/')
 
-def retrieve(request):
+def retrieve(request, returntype="plain"):
     if request.method == 'GET':
         try:
             data = Paste.objects.get(key=request.path[1:])
         except:
             raise Http404
         response = HttpResponse()
-        response['content-type'] = 'text/plain'
+        response['content-type'] = 'text/'+returntype
         response['title'] = 'Plain Text Paste'
         if request.path[1:] == 'script':
             response['title'] = "PXQZ Command line script"
@@ -55,6 +55,9 @@ def retrieve(request):
         return response
     else:
         raise Http404
+
+def html(request):
+    return retrieve(request, "html")
 
 def edit(request):
     if request.method == 'GET':

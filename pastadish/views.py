@@ -41,8 +41,9 @@ def index(request):
             return HttpResponseRedirect('/')
 
 def retrieve(request, returntype="plain"):
-    if request.path[1:].split('/')[1] == "html":
-        returntype = "html"
+    if "/" in request.path[1:]:
+        if request.path[1:].split('/')[1] == "html":
+            returntype = "html"
     if request.method == 'GET':
         try:
             data = Paste.objects.get(key=request.path[1:])

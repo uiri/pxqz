@@ -41,6 +41,8 @@ def index(request):
             return HttpResponseRedirect('/')
 
 def retrieve(request, returntype="plain"):
+    if request.path[1:].split('/')[1] == "html":
+        returntype = "html"
     if request.method == 'GET':
         try:
             data = Paste.objects.get(key=request.path[1:])
@@ -55,9 +57,6 @@ def retrieve(request, returntype="plain"):
         return response
     else:
         raise Http404
-
-def html(request):
-    return retrieve(request, "html")
 
 def edit(request):
     if request.method == 'GET':

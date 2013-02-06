@@ -41,12 +41,14 @@ def index(request):
             return HttpResponseRedirect('/')
 
 def retrieve(request, returntype="plain"):
-    if "/" in request.path[1:]:
+    pastename = request.path[1:]
+    if "/" in pastename:
         if request.path[1:].split('/')[1] == "html":
             returntype = "html"
+        pastename = request.path[1:].split('/')[0]
     if request.method == 'GET':
         try:
-            data = Paste.objects.get(key=request.path[1:])
+            data = Paste.objects.get(key=pastename)
         except:
             raise Http404
         response = HttpResponse()

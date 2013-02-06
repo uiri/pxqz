@@ -45,7 +45,7 @@ def retrieve(request, returntype="plain"):
     if "/" in pastename:
         if request.path[1:].split('/')[1] == "html":
             returntype = "html"
-        pastename = request.path[1:].split('/')[0]
+            pastename = request.path[1:].split('/')[0]
     if request.method == 'GET':
         try:
             data = Paste.objects.get(key=pastename)

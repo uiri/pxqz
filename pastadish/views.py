@@ -56,6 +56,8 @@ def retrieve(request, returntype="plain"):
         response['title'] = 'Plain Text Paste'
         if request.path[1:] == 'script':
             response['title'] = "PXQZ Command line script"
+        if request.path[1:] == 'emacs':
+            response['title'] = "PXQZ Emacs Minor Mode"
         response.write(data)
         return response
     else:
@@ -74,6 +76,7 @@ def edit(request):
 def clean(request):
     Paste.objects.filter(date__lte = datetime.datetime.fromtimestamp(time.time()-86400)).delete()
     Paste.objects.filter(key = "script").delete()
+    Paste.objects.filter(key = "emacs").delete()
     newpaste = Paste(text="""#!/usr/bin/env perl
 
 my $input = 't=';
@@ -91,5 +94,28 @@ $data = 'curl -id "' . $input . " http://p.xqz.ca/ 2>/dev/null | grep ^Location 
 exec($data);
 """)
     newpaste.key = "script"
+    newpaste.save()
+    newpaste = Paste(text="""(defun pxqz-post ()
+  (interactive)
+  (let ((url-request-method "POST")
+        (url-request-extra-headers
+         '(("Content-Type" . "application/x-www-form-urlencoded")))
+        (url-request-data
+         (concat "t="
+                 (buffer-string))))
+    (url-retrieve "http://p.xqz.ca/" 'pxqz-handle-url)))
+
+(defun pxqz-handle-url (status)
+  (message "%s" (nth 1 status))
+  (kill-new (current-message)))
+
+(define-minor-mode pxqz-mode
+  "Minor mode for easy pasting of buffers to p.xqz.ca"
+  :lighter pxqz
+  :keymap (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "C-x p") 'pxqz-post)
+            map))
+""")
+    newpaste.key = "emacs"
     newpaste.save()
     return HttpResponse('All clear', content_type='text/plain')

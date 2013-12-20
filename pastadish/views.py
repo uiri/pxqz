@@ -115,6 +115,8 @@ exec($data);
   :keymap (let ((map (make-sparse-keymap)))
             (define-key map (kbd "C-x p") 'pxqz-post)
             map))
+
+(provide 'pxqz)
 """)
     newpaste.key = "emacs"
     newpaste.save()

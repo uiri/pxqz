@@ -83,6 +83,8 @@ my $input = 't=';
 while (<STDIN>) {
       $input .= qq($_);
 }
+$input =~ s/%/%25/g;
+$input =~ s/\$/%24/g;
 $input =~ s/\+/%2B/g;
 $input =~ s/\\\\/%5C/g;
 $input =~ s/"/%22/g;

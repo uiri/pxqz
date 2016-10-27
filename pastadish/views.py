@@ -12,11 +12,11 @@ def index(request):
     request.encoding = 'utf-8'
     ip = request.META.get('HTTP_X_FORWARDED_FOR') if request.META.get('HTTP_X_FORWARDED_FOR') else request.META.get('REMOTE_ADDR')
     ip = ip.split('.')
-    if ip[0] == "188" or (ip[0] == "146" and ip[1] == "185"):
-        raise Http404
     if request.method == 'GET':
         return render_to_response('index.html', {'data': ''})
     else:
+        if "p.xqz.ca" not in request.META.get('HTTP_REFERER'):
+            raise Http404
         if request.POST['t'] != "":
             try:
                 oldpaste = Paste.objects.get(text=request.POST['t'])

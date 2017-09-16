@@ -32,7 +32,7 @@ def index(request):
                         j = 5 - (40 - i)
                     else:
                         j = i+5
-                    sha = hashlib.sha1(request.POST['t']).hexdigest()[i:j]
+                    sha = hashlib.sha1(request.POST['t'].encode('utf-8')).hexdigest()[i:j]
                     try:
                         Paste.objects.get(key=sha)
                         i += 1
@@ -56,7 +56,7 @@ def retrieve(request, returntype="plain"):
         except:
             raise Http404
         response = HttpResponse()
-        response['content-type'] = 'text/'+returntype
+        response['content-type'] = 'text/'+returntype+"; charset=utf-8"
         response['title'] = 'Plain Text Paste'
         if request.path[1:] == 'script':
             response['title'] = "PXQZ Command line script"
